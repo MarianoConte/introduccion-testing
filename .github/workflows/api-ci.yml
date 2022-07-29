@@ -28,7 +28,21 @@ jobs:
       - name: run test
         shell: bash
         run: npm run test
-      - name: lint
+  linter:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Nodejs
+        uses: actions/setup-node@v2
+        with:
+          nove-version: 14
+          cache: 'npm'
+          cache-dependency-path: ./api/package-lock.json
+      - name: install
         shell: bash
-        run: npm run lint
+        run: npm ci #Instala dependencias en un entorno de integración continua
+      - name: run linter
+        shell: bash
+        run: npm run lint:fix
 
